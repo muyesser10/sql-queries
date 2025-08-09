@@ -31,7 +31,7 @@ FROM FLO;
 
 --QUESTION 4: Write a query to get the average revenue per purchase.
 SELECT  
-  SUM(order_num_total_ever_online+order_num_total_ever_offline) ToplamSiparisMiktari
+  SUM(order_num_total_ever_online+order_num_total_ever_offline) ToplamSiparisMiktari,
 	ROUND((SUM(customer_value_total_ever_offline + customer_value_total_ever_online) / 
 	SUM(order_num_total_ever_online+order_num_total_ever_offline) 
 	), 2) AS SIPARIS_ORT_CIRO 
@@ -53,7 +53,7 @@ FROM FLO
 GROUP BY store_type;
 
 --BONUS: Parse and aggregate store_type values for total revenue per parsed type.
-SELECT Value,SUM(TOPLAM_CIRO/COUNT_) FROM
+SELECT Value,SUM(TOPLAM_CIRO/COUNT_) AS ORTALAMA_CIRO  FROM
 (
 SELECT store_type MAGAZATURU,(SELECT COUNT(VALUE) FROM  string_split(store_type,',') ) COUNT_,
        ROUND(SUM(customer_value_total_ever_offline + customer_value_total_ever_online), 2) TOPLAM_CIRO 
@@ -87,7 +87,7 @@ GROUP BY interested_in_categories_12
 ORDER BY 2 DESC;
 
 --BONUS: Parse and aggregate interested_in_categories_12 values for frequency per parsed category.
-SELECT K.VALUE,SUM(T.FREKANS_BILGISI/T.SAYI) FROM 
+SELECT K.VALUE,SUM(T.FREKANS_BILGISI/T.SAYI) AS FREKANS_ORANI FROM 
 (
 SELECT 
 (SELECT COUNT(VALUE) FROM string_split(interested_in_categories_12,',')) SAYI,
